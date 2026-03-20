@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const scheduleContainer = document.getElementById('schedule');
     const searchInput = document.getElementById('categorySearch');
+    const clearBtn = document.getElementById('clearSearch');
     
     let talks = [];
 
@@ -36,10 +37,36 @@ document.addEventListener('DOMContentLoaded', () => {
         return text.toString().replace(regex, '<span class="highlight">$1</span>');
     }
 
+    function generateCalendarUrl(talk, startTimeMins, endTimeMins) {
+        const year = 2026;
+        const month = "03";
+        const day = "20";
+        
+        const toISO = (mins) => {
+            const h = Math.floor(mins / 60).toString().padStart(2, '0');
+            const m = (mins % 60).toString().padStart(2, '0');
+            return `${year}${month}${day}T${h}${m}00Z`; // UTC for simplicity in this example
+        };
+
+        const start = toISO(startTimeMins);
+        const end = toISO(endTimeMins);
+        const title = encodeURIComponent(`TechTalks: ${talk.title}`);
+        const details = encodeURIComponent(`${talk.description}\n\nSpeakers: ${talk.speakers.join(', ')}`);
+        
+        return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&details=${details}&location=Main+Track`;
+    }
+
     function renderSchedule(filter = '') {
         scheduleContainer.innerHTML = '';
         let currentTime = START_TIME;
         const lowercaseFilter = filter.toLowerCase();
+
+        // Toggle clear button
+        if (filter) {
+            clearBtn.classList.remove('hidden');
+        } else {
+            clearBtn.classList.add('hidden');
+        }
 
         talks.forEach((talk, index) => {
             const endTime = currentTime + TALK_DURATION;
@@ -57,14 +84,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Render Talk
                 const talkEl = document.createElement('div');
                 talkEl.className = 'item talk';
+                const calUrl = generateCalendarUrl(talk, currentTime, endTime);
+                
                 talkEl.innerHTML = `
                     <div class="time-row">${formatTime(currentTime)} - ${formatTime(endTime)}</div>
                     <div class="title">${highlightText(talk.title, filter)}</div>
                     <div class="speakers">Speakers: ${highlightText(talk.speakers.join(', '), filter)}</div>
                     <div class="tags">
-                        ${talk.categories.map(cat => `<span class="tag">${highlightText(cat, filter)}</span>`).join('')}
+                        ${talk.categories.map(cat => `<span class="tag" data-category="${cat}">${highlightText(cat, filter)}</span>`).join('')}
                     </div>
                     <div class="description">${highlightText(talk.description, filter)}</div>
+                    <div class="actions">
+                        <a href="${calUrl}" target="_blank" class="calendar-link">📅 Add to Google Calendar</a>
+                    </div>
                 `;
                 scheduleContainer.appendChild(talkEl);
             }
@@ -104,13 +136,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (scheduleContainer.innerHTML === '') {
-            scheduleContainer.innerHTML = '<div class="item">No talks found for this category.</div>';
+            const emptyEl = document.createElement('div');
+            emptyEl.className = 'no-results';
+            emptyEl.innerHTML = `
+                <h2>No talks found</h2>
+                <p>We couldn't find any talks matching "<strong>${filter}</strong>".</p>
+                <button class="btn-primary" onclick="resetSearch()">View Full Schedule</button>
+            `;
+            scheduleContainer.appendChild(emptyEl);
         }
+
+        // Add listeners to tags
+        document.querySelectorAll('.tag').forEach(tag => {
+            tag.addEventListener('click', () => {
+                const category = tag.getAttribute('data-category');
+                searchInput.value = category;
+                renderSchedule(category);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
     }
+
+    window.resetSearch = () => {
+        searchInput.value = '';
+        renderSchedule('');
+    };
 
     searchInput.addEventListener('input', (e) => {
         renderSchedule(e.target.value);
     });
+
+    clearBtn.addEventListener('click', resetSearch);
 
     fetchTalks();
 });

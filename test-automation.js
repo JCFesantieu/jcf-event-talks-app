@@ -82,14 +82,16 @@ test('Data Schema Verification', (t) => {
     });
 });
 
-// 5. New: UI Resource Content Verification
+// 5. UI Resource Content Verification
 test('UI Resource Integrity', (t) => {
     const html = fs.readFileSync(path.join(__dirname, 'public/index.html'), 'utf8');
     assert.ok(html.includes('id="categorySearch"'), 'index.html must have a search input');
     assert.ok(html.includes('id="schedule"'), 'index.html must have a schedule container');
+    assert.ok(html.includes('id="clearSearch"'), 'index.html must have a clear search button');
 
     const css = fs.readFileSync(path.join(__dirname, 'public/style.css'), 'utf8');
     assert.ok(css.includes('--bg-color: #121212'), 'CSS must define the dark mode background color');
+    assert.ok(css.includes('position: sticky'), 'CSS must define a sticky header');
 });
 
 // 6. Server Connectivity and Error Handling

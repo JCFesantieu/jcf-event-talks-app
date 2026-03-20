@@ -33,38 +33,62 @@ body {
 }
 
 header {
-    background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
-    padding: 3rem 0;
+    background: linear-gradient(135deg, rgba(26, 35, 126, 0.95) 0%, rgba(13, 71, 161, 0.95) 100%);
+    padding: 2rem 0;
     margin-bottom: 2.5rem;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
+    font-size: 2.2rem;
+    margin-bottom: 0.3rem;
     letter-spacing: -1px;
 }
 
 .subtitle {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #90caf9;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 .search-container {
     max-width: 500px;
+    position: relative;
 }
 
 #categorySearch {
     width: 100%;
-    padding: 0.8rem 1.2rem;
+    padding: 0.8rem 2.5rem 0.8rem 1.2rem;
     border-radius: 8px;
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
     font-size: 1rem;
     outline: none;
-    transition: background-color 0.2s;
+    transition: all 0.2s;
+}
+
+#clearSearch {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 5px;
+}
+
+#clearSearch:hover {
+    color: white;
 }
 
 #categorySearch::placeholder {
@@ -152,11 +176,70 @@ header h1 {
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tag:hover {
+    background-color: var(--accent);
+    color: #000;
 }
 
 .description {
     font-size: 0.95rem;
     color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.calendar-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid rgba(79, 195, 247, 0.3);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.calendar-link:hover {
+    background-color: rgba(79, 195, 247, 0.1);
+    border-color: var(--accent);
+}
+
+.no-results {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--card-bg);
+    border-radius: 12px;
+    border: 1px dashed var(--border);
+}
+
+.no-results h2 {
+    margin-bottom: 1rem;
+    color: var(--accent);
+}
+
+.no-results p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.btn-primary {
+    background-color: var(--accent);
+    color: #000;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
 }
 
 footer {
