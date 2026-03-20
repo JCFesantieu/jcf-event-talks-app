@@ -26,6 +26,8 @@ A high-performance, single-page schedule website for a technical conference. It 
 ### 3. UX & Styling Standards
 - **Theme:** Strict **Dark Mode** (`--bg-color: #121212`).
 - **Feedback:** Real-time search highlighting is a core feature; do not break the `highlightText` utility.
+- **Navigation:** The header must remain `sticky` with a backdrop blur for constant search accessibility.
+- **Interactivity:** Category tags must be clickable to trigger filtering.
 - **Responsiveness:** All layouts must be mobile-first and use CSS Flexbox/Grid.
 - **Descriptions:** Talk descriptions must remain **always visible** per user requirement.
 
@@ -36,14 +38,14 @@ A high-performance, single-page schedule website for a technical conference. It 
 
 ## 🧪 Testing Protocol
 - **Command:** `npm test`
-- **Coverage:** Tests must cover time formatting, schedule math, search logic, data schema, and server routing.
+- **Coverage:** Tests must cover time formatting, schedule math, search logic, data schema, server routing, and **Frontend JS Syntax Validation**.
 - **Regressions:** Always run the full suite before pushing any frontend or logic changes.
 
 ## 📂 File Map
 - `server.js`: Entry point, handles static routing and 404s.
-- `public/script.js`: Contains the core rendering, timing, and search logic.
-- `public/style.css`: Contains all theme variables and layout rules.
-- `test-automation.js`: The source of truth for application correctness.
+- `public/script.js`: Contains the core rendering, timing, search, and calendar logic.
+- `public/style.css`: Contains all theme variables, layout rules, and sticky behaviors.
+- `test-automation.js`: The source of truth for application correctness and syntax integrity.
 
 ---
 *Last Updated: March 20, 2026*
