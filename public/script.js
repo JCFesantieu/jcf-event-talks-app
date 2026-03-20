@@ -37,12 +37,15 @@ document.addEventListener('DOMContentLoaded', () => {
         talks.forEach((talk, index) => {
             const endTime = currentTime + TALK_DURATION;
             
-            // Check if talk matches filter
-            const matchesFilter = talk.categories.some(cat => 
+            // Check if talk matches filter (by category OR speaker)
+            const matchesCategory = talk.categories.some(cat => 
                 cat.toLowerCase().includes(lowercaseFilter)
             );
+            const matchesSpeaker = talk.speakers.some(speaker => 
+                speaker.toLowerCase().includes(lowercaseFilter)
+            );
 
-            if (matchesFilter || filter === '') {
+            if (matchesCategory || matchesSpeaker || filter === '') {
                 // Render Talk
                 const talkEl = document.createElement('div');
                 talkEl.className = 'item talk';

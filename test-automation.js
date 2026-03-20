@@ -38,23 +38,26 @@ test('Schedule Timing Calculations', (t) => {
     assert.strictEqual(currentTime, 860, 'Lunch should finish at 2:20 PM (860 mins)');
 });
 
-// 3. New: Search Filtering Logic Simulation
+// 3. Logic Tests: Search Filtering Logic Simulation
 test('Search Filtering Logic', (t) => {
     const mockTalks = [
-        { categories: ['Frontend', 'React'] },
-        { categories: ['Backend', 'Security'] }
+        { categories: ['Frontend', 'React'], speakers: ['Sarah Chen', 'Marcus Miller'] },
+        { categories: ['Backend', 'Security'], speakers: ['David Wu', 'Alex Johnson'] }
     ];
 
-    const filterByCategory = (talks, query) => {
+    const filterByQuery = (talks, query) => {
         const lowerQuery = query.toLowerCase();
         return talks.filter(talk => 
-            talk.categories.some(cat => cat.toLowerCase().includes(lowerQuery))
+            talk.categories.some(cat => cat.toLowerCase().includes(lowerQuery)) ||
+            talk.speakers.some(speaker => speaker.toLowerCase().includes(lowerQuery))
         );
     };
 
-    assert.strictEqual(filterByCategory(mockTalks, 'front').length, 1, 'Should find 1 Frontend talk');
-    assert.strictEqual(filterByCategory(mockTalks, 'REACT').length, 1, 'Should be case-insensitive');
-    assert.strictEqual(filterByCategory(mockTalks, 'database').length, 0, 'Should return 0 for non-existent category');
+    assert.strictEqual(filterByQuery(mockTalks, 'front').length, 1, 'Should find 1 Frontend talk');
+    assert.strictEqual(filterByQuery(mockTalks, 'Sarah').length, 1, 'Should find talk by speaker name');
+    assert.strictEqual(filterByQuery(mockTalks, 'Marcus').length, 1, 'Should find talk by partial speaker name');
+    assert.strictEqual(filterByQuery(mockTalks, 'wu').length, 1, 'Should be case-insensitive for speakers');
+    assert.strictEqual(filterByQuery(mockTalks, 'database').length, 0, 'Should return 0 for non-existent query');
 });
 
 // 4. Data Integrity Tests

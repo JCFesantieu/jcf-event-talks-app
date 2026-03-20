@@ -8,7 +8,7 @@ A high-performance, single-page website for a 1-day technical event, built with 
   - 6 technical talks (1 hour each).
   - 10-minute transitions between sessions.
   - 1-hour lunch break after the 3rd talk.
-- **Real-time Search:** Instantly filter talks by category keywords (e.g., Frontend, Security).
+- **Real-time Search:** Instantly filter talks by category or speaker keywords (e.g., Frontend, Sarah).
 - **Dark Mode UI:** A professional, developer-centric aesthetic using CSS variables.
 - **Zero Dependencies:** Built using standard Node.js APIs and modern browser primitives.
 - **Automated Testing:** A robust suite of 6 automated tests to ensure logic and server integrity.
