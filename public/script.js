@@ -29,6 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return `${displayHours}:${mins.toString().padStart(2, '0')} ${period}`;
     }
 
+    function highlightText(text, query) {
+        if (!query) return text;
+        const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(`(${escapedQuery})`, 'gi');
+        return text.toString().replace(regex, '<span class="highlight">$1</span>');
+    }
+
     function renderSchedule(filter = '') {
         scheduleContainer.innerHTML = '';
         let currentTime = START_TIME;
@@ -37,7 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
         talks.forEach((talk, index) => {
             const endTime = currentTime + TALK_DURATION;
             
-            // Check if talk matches filter (by category OR speaker)
+            // Check if talk matches filter (by title, category, OR speaker)
+            const matchesTitle = talk.title.toLowerCase().includes(lowercaseFilter);
             const matchesCategory = talk.categories.some(cat => 
                 cat.toLowerCase().includes(lowercaseFilter)
             );
@@ -45,18 +53,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 speaker.toLowerCase().includes(lowercaseFilter)
             );
 
-            if (matchesCategory || matchesSpeaker || filter === '') {
+            if (matchesTitle || matchesCategory || matchesSpeaker || filter === '') {
                 // Render Talk
                 const talkEl = document.createElement('div');
                 talkEl.className = 'item talk';
                 talkEl.innerHTML = `
                     <div class="time-row">${formatTime(currentTime)} - ${formatTime(endTime)}</div>
-                    <div class="title">${talk.title}</div>
-                    <div class="speakers">Speakers: ${talk.speakers.join(', ')}</div>
+                    <div class="title">${highlightText(talk.title, filter)}</div>
+                    <div class="speakers">Speakers: ${highlightText(talk.speakers.join(', '), filter)}</div>
                     <div class="tags">
-                        ${talk.categories.map(cat => `<span class="tag">${cat}</span>`).join('')}
+                        ${talk.categories.map(cat => `<span class="tag">${highlightText(cat, filter)}</span>`).join('')}
                     </div>
-                    <div class="description">${talk.description}</div>
+                    <div class="description">${highlightText(talk.description, filter)}</div>
                 `;
                 scheduleContainer.appendChild(talkEl);
             }

@@ -177,3 +177,10 @@ footer {
 .hidden {
     display: none;
 }
+
+.highlight {
+    background-color: rgba(79, 195, 247, 0.3);
+    color: #fff;
+    border-radius: 2px;
+    padding: 0 2px;
+}
