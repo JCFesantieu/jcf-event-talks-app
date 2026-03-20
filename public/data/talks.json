@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "title": "Architecting Scalable Microservices with Node.js",
+    "speakers": ["Sarah Chen", "Marcus Miller"],
+    "categories": ["Backend", "Architecture", "Microservices"],
+    "description": "Deep dive into event-driven architectures, circuit breakers, and efficient inter-service communication patterns using modern Node.js tools."
+  },
+  {
+    "id": 2,
+    "title": "Mastering CSS Grid and Subgrid for Complex Layouts",
+    "speakers": ["Elena Rodriguez"],
+    "categories": ["Frontend", "CSS"],
+    "description": "Learn how to build intricate, responsive dashboard layouts with minimal code using the power of CSS Grid and the long-awaited subgrid feature."
+  },
+  {
+    "id": 3,
+    "title": "Securing Your JavaScript Supply Chain",
+    "speakers": ["David Wu", "Alex Johnson"],
+    "categories": ["Security", "JavaScript"],
+    "description": "An essential guide to identifying vulnerabilities in npm packages, implementing SBOMs, and using automated tools to keep your dependencies safe."
+  },
+  {
+    "id": 4,
+    "title": "Optimizing Performance in Large-Scale React Apps",
+    "speakers": ["Jordan Smith"],
+    "categories": ["Frontend", "Performance", "React"],
+    "description": "Strategies for reducing bundle size, optimizing render cycles with useMemo and useCallback, and implementing progressive hydration."
+  },
+  {
+    "id": 5,
+    "title": "Building Real-Time Apps with WebSockets and Redis",
+    "speakers": ["Liam O'Connor"],
+    "categories": ["Real-time", "Backend"],
+    "description": "Explore the nuances of scaling WebSocket connections across multiple servers using Redis Pub/Sub for a seamless user experience."
+  },
+  {
+    "id": 6,
+    "title": "The Future of WebAssembly: Beyond the Browser",
+    "speakers": ["Dr. Grace Hopper II", "Kofi Mensah"],
+    "categories": ["WebAssembly", "Low-level", "Cloud"],
+    "description": "A look into WASI and how WebAssembly is revolutionizing server-side computing, edge functions, and high-performance cloud logic."
+  }
+]
