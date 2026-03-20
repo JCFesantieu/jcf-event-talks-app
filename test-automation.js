@@ -83,7 +83,7 @@ test('Data Schema Verification', (t) => {
 });
 
 // 5. UI Resource Content Verification
-test('UI Resource Integrity', (t) => {
+test('UI Resource Integrity & Syntax', (t) => {
     const html = fs.readFileSync(path.join(__dirname, 'public/index.html'), 'utf8');
     assert.ok(html.includes('id="categorySearch"'), 'index.html must have a search input');
     assert.ok(html.includes('id="schedule"'), 'index.html must have a schedule container');
@@ -92,6 +92,17 @@ test('UI Resource Integrity', (t) => {
     const css = fs.readFileSync(path.join(__dirname, 'public/style.css'), 'utf8');
     assert.ok(css.includes('--bg-color: #121212'), 'CSS must define the dark mode background color');
     assert.ok(css.includes('position: sticky'), 'CSS must define a sticky header');
+
+    // JS Syntax Check
+    const jsPath = path.join(__dirname, 'public/script.js');
+    const jsContent = fs.readFileSync(jsPath, 'utf8');
+    try {
+        // Use Node's built-in vm module to check syntax without executing
+        const { Script } = require('node:vm');
+        new Script(jsContent);
+    } catch (e) {
+        assert.fail(`Syntax error in public/script.js: ${e.message}`);
+    }
 });
 
 // 6. Server Connectivity and Error Handling
